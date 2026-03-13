@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
+
+/* 1. THE 3D SCENE SETUP */
+html, body, #root {
+  margin: 0; padding: 0; height: 100%; width: 100%;
+  background-color: #030303;
+  color: #fca5a5;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+  /* Adds depth to the whole screen */
+  perspective: 1200px;
+}
+
+/* 2. THE TILTED DASHBOARD GRID */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  grid-template-rows: 1fr 220px;
+  gap: 20px;
+  padding: 40px;
+  height: 100vh;
+  /* The 3D Transformation */
+  transform: rotateX(10deg) rotateY(-2deg) translateZ(0);
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+}
+
+/* 3. FLOATING GLASS PANELS */
+.glass-panel {
+  background: rgba(15, 5, 5, 0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  border-radius: 12px;
+  /* Deep shadow for the 'Pop-Out' effect */
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.8),
+    0 0 20px rgba(220, 38, 38, 0.1);
+  transform: translateZ(20px); /* Makes panels float above the 'floor' */
+}
+
+/* 4. LEAFLET MAP REFINEMENT */
+.leaflet-container {
+  width: 100% !important; height: 100% !important;
+  background-color: #050505 !important;
+  border-radius: 12px;
+}
+
+.node-precision {
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 20px currentColor;
+  cursor: pointer;
+  z-index: 1000 !important;
+}
+
+.node-red { background: #dc2626; color: #dc2626; }
+.node-blue { background: #2563eb; color: #2563eb; }
+.node-green { background: #10b981; color: #10b981; }
+
+.font-data { font-family: 'JetBrains Mono', monospace; }
+
+/* 5. HOLOGRAPHIC SCANLINES */
+.crt-overlay::after {
+  content: ""; position: fixed; inset: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(220, 38, 38, 0.05) 50%);
+  background-size: 100% 4px; z-index: 9999; pointer-events: none; opacity: 0.3;
+}
